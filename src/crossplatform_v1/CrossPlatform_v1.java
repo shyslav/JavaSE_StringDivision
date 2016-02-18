@@ -1,5 +1,6 @@
 package crossplatform_v1;
 
+import functions.filePrint;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -23,25 +24,51 @@ public class CrossPlatform_v1 {
         have(fileRead, 15);
     }
 
+    /**
+     * @param list входящий лист строк
+     * @param n количество символов в одной строке
+     */
     public static void have(ArrayList<String> list, int n) {
-        System.out.println(list.get(0));
+        //переменная которая хранит слова
         String[] splits = list.get(0).split(" ");
-        for (String tmp : splits) {
-            System.out.println(tmp + " " + tmp.length());
-        }
         int cycle = 0;
+        StringBuilder sb = new StringBuilder();
+        // лист ответов
+        ArrayList<String> answer = new ArrayList<>();
         System.out.println("-------------");
-        for (String tmp : splits) {
-            cycle += tmp.length()+1;
+        for (int i = 0; i <= splits.length; i++) {
+            if (i == splits.length) {
+                answer.add(sb.toString());
+                sb.setLength(0);
+                break;
+            }
+            String tmp = splits[i];
+            cycle += tmp.length() + 1;
+            // добавить слово в текущую строку 
             if (cycle < n) {
+                sb.append(tmp + " ");
                 System.out.print(tmp + " ");
             } else {
+                //Начать новую строку, кол-во символов текущей строки привысила входящее значение
                 cycle = 0;
-                System.out.println(tmp);
+                answer.add(sb.toString());
+                sb.setLength(0);
+                //длина текущей строки равна длине слова +1 (пробел)
+                cycle += tmp.length() + 1;
+                sb.append(tmp + " ");
+                System.out.print("\n" + tmp + " ");
             }
         }
+        System.out.println("\n-------------");
+        for (String z : answer) {
+            System.out.println(z);
+        }
+        filePrint.FilePrint(answer);
     }
-
+    /**
+     * @param name название входящего файла
+     * @return лист считанныъ строк
+     */
     public static ArrayList<String> fileRead(String name) {
         Scanner scan = null;
         String tmp = null;
