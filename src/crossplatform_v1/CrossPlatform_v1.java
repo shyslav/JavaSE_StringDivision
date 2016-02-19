@@ -59,7 +59,7 @@ public class CrossPlatform_v1 {
                 System.out.print("\n" + tmp + " ");
             }
         }
-        System.out.println("\n-------------");
+        System.out.println("\n-------------\n");
         for (String z : answer) {
             System.out.println(z);
         }
