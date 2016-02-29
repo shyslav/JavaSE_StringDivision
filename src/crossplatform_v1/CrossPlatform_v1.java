@@ -23,100 +23,67 @@ public class CrossPlatform_v1 {
         }
         have(fileRead, 15);
     }
-
     /**
      * @param list входящий лист строк
      * @param n количество символов в одной строке
      */
-//    public static void have(ArrayList<String> list, int n) {
-//        //переменная которая хранит слова
-//        String[] splits = list.get(0).split(" ");
-//        int cycle = 0;
-//        StringBuilder sb = new StringBuilder();
-//        // лист ответов
-//        ArrayList<String> answer = new ArrayList<>();
-//        System.out.println("-------------");
-//        for (int i = 0; i <= splits.length; i++) {
-//            if (i == splits.length) {
-//                answer.add(sb.toString());
-//                sb.setLength(0);
-//                break;
-//            }
-//            String tmp = splits[i];
-//            cycle += tmp.length() + 1;
-//            // добавить слово в текущую строку 
-//            if (cycle < n) {
-//                sb.append(tmp + " ");
-//                System.out.print(tmp + " ");
-//            } else {
-//                //Начать новую строку, кол-во символов текущей строки привысила входящее значение
-//                cycle = 0;
-//                answer.add(sb.toString());
-//                sb.setLength(0);
-//                //длина текущей строки равна длине слова +1 (пробел)
-//                cycle += tmp.length() + 1;
-//                sb.append(tmp + " ");
-//                System.out.print("\n" + tmp + " ");
-//            }
-//        }
-//        System.out.println("\n-------------\n");
-//        for (String z : answer) {
-//            System.out.println(z);
-//        }
-//        filePrint.FilePrint(answer);
-//    }
-    
-    
-       public static void have(ArrayList<String> list, int n) {
-        //переменная которая хранит слова
-        String[] splits = list.get(0).split(" ");
-        int cycle = 0;
+    public static void have(ArrayList<String> list, int n) {
+        String[] splits = list.get(0).split("\\s+");
         StringBuilder sb = new StringBuilder();
-        // лист ответов
         ArrayList<String> answer = new ArrayList<>();
-        System.out.println("-------------");
-        for (int i = 0; i <= splits.length; i++) {
-            if (i == splits.length) {
-                answer.add(sb.toString());
-                sb.setLength(0);
-                break;
+        String substring = "";
+        System.out.println("****"+splits.length);
+        for (int i = 0; i < splits.length;) {
+            String tmp = splits[i].trim();
+            System.out.println(i);
+            if (sb.length() <= n) {
+                int stringSize = sb.length() + tmp.length();
+                if (tmp.length() < n && stringSize < n) {
+                    sb.append(tmp + " ");
+                    if(i+1==splits.length && !sb.toString().equals(" "))
+                        answer.add(sb.toString().trim());
+                    i++;
+                } else {
+                    substring = tmp.substring(0, n - sb.length());
+                    sb.append(substring);
+                    splits[i] = tmp.substring(substring.length(), tmp.length());
+                    if(splits[i].equals("")||splits.equals(" "))
+                    {
+                        i++;
+                    }
+                    answer.add(sb.toString());
+                    sb.setLength(0);
+                }
             }
-            String tmp = splits[i];
-            cycle += tmp.length() + 1;
-            //System.out.println("Answer_size"+answer.size());
 
-            if( tmp.length()> n){
-                //System.out.println(tmp + " надо разделить на ");  
-                System.out.print(tmp.length() + " /" +n+" ="+(int)Math.ceil((double)tmp.length()/(double)n));
-                for (int j = 0; j <= (int)Math.ceil((double)tmp.length()/(double)n); j++) {
-                    String ttn = tmp.substring(0, n); 
-                    System.out.print("\n"+ttn + "("+ ttn.length()+")");
-                    tmp = tmp.substring(n, tmp.length());
-                    //System.out.print("tmp   "+tmp+"("+ tmp.length()+")");
-                    sb.append("\n"+ttn);  
-                }           
-            }
-            // добавить слово в текущую строку 
-            if (cycle < n) {
-                sb.append(tmp + " ");
-                System.out.print(tmp + " ");               
-            } else {
-                //Начать новую строку, кол-во символов текущей строки привысила входящее значение
-                cycle = 0;
-                answer.add(sb.toString());
-                sb.setLength(0);
-                //длина текущей строки равна длине слова +1 (пробел)
-                cycle += tmp.length() + 1;
-                sb.append(tmp + " ");
-                System.out.print("\n" + tmp + " ");
-            }
-        }
-        System.out.println("\n-------------\n");
-        for (String z : answer) {
-            System.out.println(z);
+//            while(cycle != n)
+//            {
+//                if(tmp.length()<n)  //14 символов
+//                {
+//                    sb.append(tmp + " ");
+//                    i++;
+//                    break;
+//                }
+//                else if(tmp.length()>=n)
+//                {
+//                    substring = tmp.substring(0, n-sb.length());
+//                    sb.append(substring);
+//                    cycle+=substring.length()+1;
+//                    splits[i]=tmp.substring(substring.length(),tmp.length());
+//                    answer.add(sb.toString());
+//                    cycle=0;
+//                    sb.setLength(0);
+//                    break;
+//                }
+//            }
+//            if(cycle<n)
+//            {
+//                sb.append(splits[i]);
+//            }
         }
         filePrint.FilePrint(answer);
     }
+
     /**
      * @param name название входящего файла
      * @return лист считанныъ строк
@@ -130,7 +97,7 @@ public class CrossPlatform_v1 {
             while (scan.hasNext()) {
                 tmp = scan.nextLine();
                 System.out.println(tmp);
-                list.add(tmp);
+                list.add(tmp.trim());
             }
         } catch (IOException ex) {
             System.out.println("Файл не найден");
