@@ -28,7 +28,46 @@ public class CrossPlatform_v1 {
      * @param list входящий лист строк
      * @param n количество символов в одной строке
      */
-    public static void have(ArrayList<String> list, int n) {
+//    public static void have(ArrayList<String> list, int n) {
+//        //переменная которая хранит слова
+//        String[] splits = list.get(0).split(" ");
+//        int cycle = 0;
+//        StringBuilder sb = new StringBuilder();
+//        // лист ответов
+//        ArrayList<String> answer = new ArrayList<>();
+//        System.out.println("-------------");
+//        for (int i = 0; i <= splits.length; i++) {
+//            if (i == splits.length) {
+//                answer.add(sb.toString());
+//                sb.setLength(0);
+//                break;
+//            }
+//            String tmp = splits[i];
+//            cycle += tmp.length() + 1;
+//            // добавить слово в текущую строку 
+//            if (cycle < n) {
+//                sb.append(tmp + " ");
+//                System.out.print(tmp + " ");
+//            } else {
+//                //Начать новую строку, кол-во символов текущей строки привысила входящее значение
+//                cycle = 0;
+//                answer.add(sb.toString());
+//                sb.setLength(0);
+//                //длина текущей строки равна длине слова +1 (пробел)
+//                cycle += tmp.length() + 1;
+//                sb.append(tmp + " ");
+//                System.out.print("\n" + tmp + " ");
+//            }
+//        }
+//        System.out.println("\n-------------\n");
+//        for (String z : answer) {
+//            System.out.println(z);
+//        }
+//        filePrint.FilePrint(answer);
+//    }
+    
+    
+       public static void have(ArrayList<String> list, int n) {
         //переменная которая хранит слова
         String[] splits = list.get(0).split(" ");
         int cycle = 0;
@@ -44,10 +83,23 @@ public class CrossPlatform_v1 {
             }
             String tmp = splits[i];
             cycle += tmp.length() + 1;
+            //System.out.println("Answer_size"+answer.size());
+
+            if( tmp.length()> n){
+                //System.out.println(tmp + " надо разделить на ");  
+                System.out.print(tmp.length() + " /" +n+" ="+(int)Math.ceil((double)tmp.length()/(double)n));
+                for (int j = 0; j <= (int)Math.ceil((double)tmp.length()/(double)n); j++) {
+                    String ttn = tmp.substring(0, n); 
+                    System.out.print("\n"+ttn + "("+ ttn.length()+")");
+                    tmp = tmp.substring(n, tmp.length());
+                    //System.out.print("tmp   "+tmp+"("+ tmp.length()+")");
+                    sb.append("\n"+ttn);  
+                }           
+            }
             // добавить слово в текущую строку 
             if (cycle < n) {
                 sb.append(tmp + " ");
-                System.out.print(tmp + " ");
+                System.out.print(tmp + " ");               
             } else {
                 //Начать новую строку, кол-во символов текущей строки привысила входящее значение
                 cycle = 0;
